@@ -1,5 +1,33 @@
 @echo off
 
+:: BatchGotAdmin Borrowed from Eneerge @ https://sites.google.com/site/eneerge/scripts/batchgotadmin
+:-------------------------------------
+REM  --> Check for permissions
+    IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
+>nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
+) ELSE (
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+)
+
+REM --> If error flag set, we do not have admin.
+if '%errorlevel%' NEQ '0' (
+    goto UACPrompt
+) else ( goto gotAdmin )
+
+:UACPrompt
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+    set params= %*
+    echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+    "%temp%\getadmin.vbs"
+    del "%temp%\getadmin.vbs"
+    exit /B
+
+:gotAdmin
+    pushd "%CD%"
+    CD /D "%~dp0"
+:--------------------------------------    
+
 ::Borrowed from @abbodi1406's scripts
 for /f "tokens=6 delims=[]. " %%i in ('ver') do set build=%%i
 
@@ -11,16 +39,6 @@ if %build% LSS 17763 (
     pause
     goto :EOF
 )
-
-REG QUERY HKU\S-1-5-19\Environment >NUL 2>&1
-IF %ERRORLEVEL% EQU 0 goto :START_SCRIPT
-
-echo =====================================================
-echo This script needs to be executed as an administrator.
-echo =====================================================
-echo.
-pause
-goto :EOF
 
 :START_SCRIPT
 set "scriptver=2.5.0"
