@@ -40,17 +40,6 @@ if %build% LSS 17763 (
     goto :EOF
 )
 
-REG QUERY HKU\S-1-5-19\Environment >NUL 2>&1
-IF %ERRORLEVEL% EQU 0 goto :START_SCRIPT
-
-:NOUAC
-echo =====================================================
-echo This script needs to be executed as an administrator.
-echo =====================================================
-echo.
-pause
-goto :EOF
-
 :START_SCRIPT
 set "scriptver=2.5.0"
 set "FlightSigningEnabled=0"
