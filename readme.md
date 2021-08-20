@@ -1,45 +1,39 @@
-OfflineInsiderEnroll
+OfflineInsiderEnroll-tc | 繁體中文翻譯 by Kevinowo
 --------------------
 
-### Description
-OfflineInsiderEnroll is a simple Windows Command Prompt script to enable access
-to the Windows Insider Program on machines not signed in with Microsoft Account.
+此分支為繁體中文翻譯版, 原作為 https://github.com/abbodi1406/offlineinsiderenroll
+### 介紹
+這是一個可使您的電腦 (即使未達 Windows 11 升級標準或尚未登入 Microsoft
+帳號) 加入 **Windows 測試人員計畫** 來取得最新測試版更新的小型腳本。
+這個腳本只能運作在 **Windows 10 RS5 (1809) 或更新**的系統版本上。
 
-This script is compatible only with Windows 10 RS5 and later.
+### 使用方法
+這個腳本需要更高的權限才能執行，打開腳本後，腳本會提示需要權限
+按 **是** 來繼續使用腳本
 
-### Usage
-This script requires administrative priviliges to run. You can simply execute it
-by right clicking it > `Run as Administrator`.
+#### 安裝及使用教學
+啟動此腳本後，腳本會提示**三個更新頻道**的選項，請依自己的需求進行選擇。
+輸入選項代號後，按下 **Enter** 即可開始加入更新頻道。
 
-#### Installation and configuration changes
-After starting the script offers selection of *Windows Insider Program* channels.
-To make a selection, press a letter coresponding to option you choose and press
-ENTER.
+您可能會被要求要重新啟動您的電腦來使啟動 **Microsoft Flight Signing**
+此服務是 **Windows 測試人員計畫** 所需要的必要服務。
 
-If the machine was not enrolled to the Insider Program, you will get prompted to
-restart your machine to enable *Microsoft Flight Signing* which is required by
-*Windows Insider Program*.
+**注意:** 
+測試人員計畫需要您的診斷資料設定為 **傳送完整資料**
+在您加入 **Windows 測試人員資料** 後，請確認您的診斷資料收集設定已改成 
+**傳送完整資料**，若您沒有調整這個設定，可能會造成無法接收更新之問題
+您可以至 **設定 > 隱私 > 診斷與意見** 來進行驗證及更改相關設定是否已設定成功
 
-**Notice:** Windows Insider Program requires telemetry to be set to *Full*.
-After enrolling your machine to the *Windows Insider Program* please make sure
-that your diagnostic data collection settings are set to *Full*. Some *Insider
-Preview* builds may not get offered in *Windows Update* if you do not have
-correct telemetry settings. You can verify or modify your telemetry settings in
-*Settings* > *Privacy* > *Diagnostics & feedback*.
+#### 恢復您的電腦更新頻道至預設值
+如果您不希望再接收預覽更新，您可以再次打開腳本，並選擇 `(5) 停止接收預覽更新`
+執行後，因要停用 **Microsoft Flight Signing**，腳本會要求您要重新啟動電腦
+重新啟動後即可回復更新頻道設定
 
-#### Restoring Windows Insider Program to default options
-To restore *Windows Insider Program* to default settings simply choose `Stop
-receiving Insider Preview builds` in OfflineInsiderEnroll. You will get prompted
-to reboot, because this option will disable *Microsoft Flight Signing*.
+### 這是如何運作的?
+此腳本使用了 `TestFlags` 的登錄值，若您將該值設定為 `0x20`，更新服務將不連
+線至 **Windows Insider Server** 進行檢查，因此，我們可以設定自定義的設定
+，且不會被更新服務給覆寫而導致設定失效，也因為更新服務不會連線檢查確認您的電腦
+是否已經加入計畫，所以您就可以開始接收更新了。
 
-### How does this work?
-This script takes advantage of undocumented `TestFlags` registry value.
-If this value is set to `0x20`, all access to online *Windows Insider* services
-gets disabled. Because of this, we can set our own *Windows Insider Preview*
-configuration without being overriden by the contact to the service. Since
-Windows Update does not check if machine is actually enrolled to the program,
-you will get offered *Insider Preview* builds by just setting correct values in
-the registry.
-
-### License
-This project is licensed under the MIT License. See `LICENSE` for details.
+### 授權
+此專案是以 MIT License 授權，若要了解更多請查閱 `LICENSE (英文)` 檔案。
