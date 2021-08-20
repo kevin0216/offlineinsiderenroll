@@ -8,8 +8,8 @@ to the Windows Insider Program on machines not signed in with Microsoft Account.
 This script is compatible only with Windows 10 RS5 and later.
 
 ### Usage
-This script requires administrative priviliges to run. You can simply execute it
-by right clicking it > `Run as Administrator`.
+This script requires administrative priviliges to run. Script will prompt UAC, 
+click Yes to execute it.
 
 #### Installation and configuration changes
 After starting the script offers selection of *Windows Insider Program* channels.
